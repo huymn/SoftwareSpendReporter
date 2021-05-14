@@ -12,5 +12,19 @@ public class Transaction {
     }
 
     //Accessors
+    private String getTransactionDate() {
+        return this.transactionDate;
+    }
 
+    private String getVendor() {
+        return this.vendor;
+    }
+
+    private String getProduct() {
+        return this.product;
+    }
+
+    private int getAmount() {
+        return this.amount;
+    }
 }
