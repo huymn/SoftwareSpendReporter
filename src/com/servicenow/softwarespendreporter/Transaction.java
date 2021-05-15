@@ -40,18 +40,38 @@ public class Transaction {
         return vendor1.compareTo(vendor2);
     };
 
+    /**
+     * Method: getTransactionDate
+     * Getter for instance variable transactionDate
+     * @return transactionDate
+     */
     public String getTransactionDate() {
         return this.transactionDate;
     }
 
+    /**
+     * Method: getVendor
+     * Getter for instance variable vendor
+     * @return vendor
+     */
     public String getVendor() {
         return this.vendor;
     }
 
+    /**
+     * Method: getProduct
+     * Getter for instance variable product
+     * @return product
+     */
     public String getProduct() {
         return this.product;
     }
 
+    /**
+     * Method: getAmount
+     * Getter for instance variable amount
+     * @return amount
+     */
     public int getAmount() {
         return this.amount;
     }
