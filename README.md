@@ -22,7 +22,7 @@ Java version require to run this program is as follows:
 - From there, nagivate to /out/production/SoftwareSpendReporter
 - Run the command : 
 
-      java com.servicenow.softwarespendreporter ./path/to/inputfile.csv
+      java com.servicenow.softwarespendreporter.SoftwareSpendReporter ./path/to/inputfile.csv
     
   Replace "./path/to/inputfile.csv" with the path to your .csv file
   
