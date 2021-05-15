@@ -1,5 +1,5 @@
+package com.servicenow.softwarespendreporter;
 import java.util.Comparator;
-import java.util.Locale;
 
 public class Transaction {
     protected String transactionDate;
@@ -15,13 +15,10 @@ public class Transaction {
     }
 
     //Comparator so that transactions can be sorted
-    public static Comparator<Transaction> vendorNameComparator = new Comparator<Transaction>() {
-        @Override
-        public int compare(Transaction t1, Transaction t2) {
-            String vendor1 = t1.getVendor().toUpperCase();
-            String vendor2 = t2.getVendor().toUpperCase();
-            return vendor1.compareTo(vendor2);
-        }
+    public static Comparator<Transaction> vendorNameComparator = (t1, t2) -> {
+        String vendor1 = t1.getVendor().toUpperCase();
+        String vendor2 = t2.getVendor().toUpperCase();
+        return vendor1.compareTo(vendor2);
     };
 
     public static Comparator<Transaction> getVendorNameComparator() {
@@ -29,10 +26,6 @@ public class Transaction {
     }
 
     //Accessors
-    public String getTransactionDate() {
-        return this.transactionDate;
-    }
-
     public String getVendor() {
         return this.vendor;
     }

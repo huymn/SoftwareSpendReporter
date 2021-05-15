@@ -1,8 +1,14 @@
-import java.util.*;
-import java.io.*;
+package com.servicenow.softwarespendreporter;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-class SoftwareSpendReporter {
+public class SoftwareSpendReporter {
     public static void main(String[] args) {
         //Check for valid arguments
         if(args.length != 2) {
@@ -21,9 +27,9 @@ class SoftwareSpendReporter {
     }
 
     private static ArrayList<Transaction> getTransactions(String fp) {
-        ArrayList<Transaction> transactionsList = new ArrayList<Transaction>();
+        ArrayList<Transaction> transactionsList = new ArrayList<>();
         BufferedReader reader = null;
-        String line = "";
+        String line;
 
         try {
             reader = new BufferedReader(new FileReader(fp));
@@ -96,9 +102,7 @@ class SoftwareSpendReporter {
         report.forEach((vendor, products) -> {
             int total = getTotal(products);
             System.out.println(vendor + " " + total);
-            products.forEach((prod, amt) -> {
-                System.out.println("  " + prod + " " + amt);
-            });
+            products.forEach((prod, amt) -> System.out.println("  " + prod + " " + amt));
         });
     }
 
@@ -106,9 +110,7 @@ class SoftwareSpendReporter {
 
         AtomicInteger total = new AtomicInteger();
 
-        products.forEach((prod, amt) -> {
-            total.addAndGet(amt);
-        });
+        products.forEach((prod, amt) -> total.addAndGet(amt));
         return total.get();
     }
 }
