@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SoftwareSpendReporterTest {
     SoftwareSpendReporter SSR;
     Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-    String SPath = path.toString() + "\\src\\test\\testpath.csv";
+    String SPath = path.toString() + "\\src\\resources\\test1.csv";
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 
@@ -27,6 +27,12 @@ class SoftwareSpendReporterTest {
     @BeforeEach
     public void setUp() {
         SSR = new SoftwareSpendReporter();
+    }
+
+    @Test
+    public void shouldPrintFromFile() {
+        SSR.printReport(SPath);
+        Assertions.assertEquals("Adobe $20,000\r\n  Premier Pro $20,000\r\nSalesforce $1,000\r\n  Random Product $1,000", outContent.toString().trim());
     }
 
     @Test
@@ -47,17 +53,6 @@ class SoftwareSpendReporterTest {
         transactions.add(t3);
         Assertions.assertFalse(SSR.getReport(transactions).isEmpty());
         assertEquals(SSR.getReport(transactions).size(), 1);
-    }
-
-    @Test
-    public void shouldPrint() {
-        LinkedHashMap<String, TreeMap<String, Integer>> report = new LinkedHashMap<>();
-        TreeMap<String, Integer> products = new TreeMap<>();
-        products.put("product1", 3000);
-        products.put("product2", 4000);
-        report.put("vendor", products);
-        SSR.print(report);
-        Assertions.assertEquals("vendor $7,000\r\n  product1 $3,000\r\n  product2 $4,000", outContent.toString().trim());
     }
 
     @Test

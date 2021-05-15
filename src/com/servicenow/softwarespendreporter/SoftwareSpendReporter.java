@@ -1,7 +1,6 @@
 package com.servicenow.softwarespendreporter;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -35,6 +34,11 @@ public class SoftwareSpendReporter {
 
     }
 
+    /**
+     * Method: printReport
+     * Generate report from csv file and print report
+     * @param fp filepath of .csv file
+     */
     public void printReport(String fp) {
         //Get the transactions by sorted the vendor's name
         ArrayList<Transaction> transactions = getTransactions(fp);
