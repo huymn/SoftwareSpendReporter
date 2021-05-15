@@ -120,25 +120,25 @@ public class SoftwareSpendReporter {
         //Loop through each transaction in transactions
         for(Transaction transaction : transactions) {
             //If the vendor of this transaction is not in the hashmap, put a new one in
-            if(!report.containsKey(transaction.vendor)) {
+            if(!report.containsKey(transaction.getVendor())) {
                 TreeMap<String, Integer> productAndAmount = new TreeMap<>();
-                productAndAmount.put(transaction.product, transaction.amount);
-                report.put(transaction.vendor, productAndAmount);
+                productAndAmount.put(transaction.getProduct(), transaction.getAmount());
+                report.put(transaction.getVendor(), productAndAmount);
             }
             else {
                 //Get the current product and amount of this vendor
-                TreeMap<String, Integer> currProdAndAmount = report.get(transaction.vendor);
+                TreeMap<String, Integer> currProdAndAmount = report.get(transaction.getVendor());
                 //If there's already a product from this vendor, update the amount
-                if(currProdAndAmount.containsKey(transaction.product)) {
-                    int currProdAmount = currProdAndAmount.get(transaction.product);
-                    currProdAndAmount.replace(transaction.product, currProdAmount + transaction.amount);
+                if(currProdAndAmount.containsKey(transaction.getProduct())) {
+                    int currProdAmount = currProdAndAmount.get(transaction.getProduct());
+                    currProdAndAmount.replace(transaction.getProduct(), currProdAmount + transaction.getAmount());
                 }
                 //If not, put the new product with its' amount cost in
                 else {
-                    currProdAndAmount.put(transaction.product, transaction.amount);
+                    currProdAndAmount.put(transaction.getProduct(), transaction.getAmount());
                 }
                 //Update this vendor info
-                report.replace(transaction.vendor, currProdAndAmount);
+                report.replace(transaction.getVendor(), currProdAndAmount);
             }
         }
         //Return the report

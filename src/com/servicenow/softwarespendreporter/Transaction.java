@@ -11,10 +11,10 @@ import java.util.Comparator;
  *
  */
 public class Transaction {
-    protected String transactionDate;
-    protected String vendor;
-    protected String product;
-    protected int amount;
+    private String transactionDate;
+    private String vendor;
+    private String product;
+    private int amount;
 
     /**
      * Constructor
@@ -39,4 +39,20 @@ public class Transaction {
         String vendor2 = t2.vendor.toUpperCase();
         return vendor1.compareTo(vendor2);
     };
+
+    public String getTransactionDate() {
+        return this.transactionDate;
+    }
+
+    public String getVendor() {
+        return this.vendor;
+    }
+
+    public String getProduct() {
+        return this.product;
+    }
+
+    public int getAmount() {
+        return this.amount;
+    }
 }
