@@ -59,7 +59,7 @@ public class SoftwareSpendReporter {
             }
         }
         //sort the transaction list and return it
-        transactionsList.sort(Transaction.getVendorNameComparator());
+        transactionsList.sort(Transaction.vendorNameComparator);
         return transactionsList;
     }
 
@@ -67,24 +67,24 @@ public class SoftwareSpendReporter {
         LinkedHashMap<String, TreeMap<String, Integer>> report = new LinkedHashMap<>();
 
         for(Transaction t : transactions) {
-            if(!report.containsKey(t.getVendor())) {
+            if(!report.containsKey(t.vendor)) {
                 TreeMap<String, Integer> productAndAmount = new TreeMap<>();
-                productAndAmount.put(t.getProduct(), t.getAmount());
-                report.put(t.getVendor(), productAndAmount);
+                productAndAmount.put(t.product, t.amount);
+                report.put(t.vendor, productAndAmount);
             }
             else {
-                TreeMap<String, Integer> tmpProdAndAmount = report.get(t.getVendor());
+                TreeMap<String, Integer> tmpProdAndAmount = report.get(t.vendor);
                 //If there's already a product from this vendor, update the amount
-                if(tmpProdAndAmount.containsKey(t.getProduct())) {
-                    int currProdAmount = tmpProdAndAmount.get(t.getProduct());
-                    tmpProdAndAmount.replace(t.getProduct(), currProdAmount + t.getAmount());
+                if(tmpProdAndAmount.containsKey(t.product)) {
+                    int currProdAmount = tmpProdAndAmount.get(t.product);
+                    tmpProdAndAmount.replace(t.product, currProdAmount + t.amount);
                 }
                 //If not, put the new product with its' amount cost in
                 else {
-                    tmpProdAndAmount.put(t.getProduct(), t.getAmount());
+                    tmpProdAndAmount.put(t.product, t.amount);
                 }
                 //Update this vendor info
-                report.replace(t.getVendor(), tmpProdAndAmount);
+                report.replace(t.vendor, tmpProdAndAmount);
             }
         }
 
