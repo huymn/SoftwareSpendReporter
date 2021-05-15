@@ -11,9 +11,12 @@ class SoftwareSpendReporter {
         }
         //Get path of CSV file, assuming that this file is valid
         String filePath = args[1];
-
+        //Get the transactions by sorted the vendor's name
         ArrayList<Transaction> transactions = getTransactions(filePath);
-
+        //Hashtable for spending report
+        LinkedHashMap<String, TreeMap<String, Integer>> spendReport = getReport(transactions);
+        //Print out report
+        printReport(spendReport);
     }
 
     private static ArrayList<Transaction> getTransactions(String fp) {
@@ -58,5 +61,37 @@ class SoftwareSpendReporter {
         //sort the transaction list and return it
         transactionsList.sort(Transaction.getVendorNameComparator());
         return transactionsList;
+    }
+
+    private static LinkedHashMap<String, TreeMap<String, Integer>> getReport(ArrayList<Transaction> transactions) {
+        LinkedHashMap<String, TreeMap<String, Integer>> report = new LinkedHashMap<>();
+
+        for(Transaction t : transactions) {
+            if(!report.containsKey(t.getVendor())) {
+                TreeMap<String, Integer> productAndAmount = new TreeMap<>();
+                productAndAmount.put(t.getProduct(), t.getAmount());
+                report.put(t.getVendor(), productAndAmount);
+            }
+            else {
+                TreeMap<String, Integer> tmpProdAndAmount = report.get(t.getVendor());
+                //If there's already a product from this vendor, update the amount
+                if(tmpProdAndAmount.containsKey(t.getProduct())) {
+                    int currProdAmount = tmpProdAndAmount.get(t.getProduct());
+                    tmpProdAndAmount.replace(t.getProduct(), currProdAmount + t.getAmount());
+                }
+                //If not, put the new product with its' amount cost in
+                else {
+                    tmpProdAndAmount.put(t.getProduct(), t.getAmount());
+                }
+                //Update this vendor info
+                report.replace(t.getVendor(), tmpProdAndAmount);
+            }
+        }
+
+        return report;
+    }
+
+    private static void printReport(LinkedHashMap<String, TreeMap<String, Integer>> r) {
+        System.out.println("Nothing just yet");
     }
 }
