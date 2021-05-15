@@ -19,7 +19,7 @@ Java version require to run this program is as follows:
 ## Usage
 - Download the zip file and extract to location of your chosing
 - In the Command Prompt, navigate to where you extracted the files
-- From there, nagivate to SoftwareSpendReporter\out\production\SoftwareSpendReporter
+- From there, nagivate to /out/production/SoftwareSpendReporter
 - Run the command : 
 
       java com.servicenow.softwarespendreporter ./path/to/inputfile.csv
