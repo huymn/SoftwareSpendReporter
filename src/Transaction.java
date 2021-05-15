@@ -1,3 +1,6 @@
+import java.util.Comparator;
+import java.util.Locale;
+
 public class Transaction {
     protected String transactionDate;
     protected String vendor;
@@ -11,20 +14,34 @@ public class Transaction {
         this.amount = a;
     }
 
+    //Comparator so that transactions can be sorted
+    public static Comparator<Transaction> vendorNameComparator = new Comparator<Transaction>() {
+        @Override
+        public int compare(Transaction t1, Transaction t2) {
+            String vendor1 = t1.getVendor().toUpperCase();
+            String vendor2 = t2.getVendor().toUpperCase();
+            return vendor1.compareTo(vendor2);
+        }
+    };
+
+    public static Comparator<Transaction> getVendorNameComparator() {
+        return vendorNameComparator;
+    }
+
     //Accessors
-    private String getTransactionDate() {
+    public String getTransactionDate() {
         return this.transactionDate;
     }
 
-    private String getVendor() {
+    public String getVendor() {
         return this.vendor;
     }
 
-    private String getProduct() {
+    public String getProduct() {
         return this.product;
     }
 
-    private int getAmount() {
+    public int getAmount() {
         return this.amount;
     }
 }
