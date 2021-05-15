@@ -1,6 +1,7 @@
 package com.servicenow.softwarespendreporter;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -29,12 +30,18 @@ public class SoftwareSpendReporter {
         }
         //Get path of CSV file, assuming that this file is valid
         String filePath = args[0];
+        SoftwareSpendReporter softwareSpendReporter = new SoftwareSpendReporter();
+        softwareSpendReporter.printReport(filePath);
+
+    }
+
+    public void printReport(String fp) {
         //Get the transactions by sorted the vendor's name
-        ArrayList<Transaction> transactions = getTransactions(filePath);
+        ArrayList<Transaction> transactions = getTransactions(fp);
         //Hashtable for spending report
         LinkedHashMap<String, TreeMap<String, Integer>> spendReport = getReport(transactions);
         //Print out report
-        printReport(spendReport);
+        print(spendReport);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -46,10 +53,13 @@ public class SoftwareSpendReporter {
      * Take in the path to the csv file
      * Read from the csv file and return a list of the transactions sorted by the vendor's name
      *
-     * @param fp - path to csv file
+     * @param fp path to csv file
      * @return transaction list sorted by vendor's name
      */
-    private static ArrayList<Transaction> getTransactions(String fp) {
+    public ArrayList<Transaction> getTransactions(String fp) {
+        if(fp == null) {
+            throw new NullPointerException("file path is null");
+        }
         //List of transactions
         ArrayList<Transaction> transactionsList = new ArrayList<>();
         //Reader for reading from file
@@ -108,10 +118,10 @@ public class SoftwareSpendReporter {
      *
      * Take in list of transactions
      * Convert it to proper report information
-     * @param transactions - sorted list of transactions
+     * @param transactions sorted list of transactions
      * @return proper report information
      */
-    private static LinkedHashMap<String, TreeMap<String, Integer>> getReport(ArrayList<Transaction> transactions) {
+    public LinkedHashMap<String, TreeMap<String, Integer>> getReport(ArrayList<Transaction> transactions) {
         //LinkedHashMap for report since we want to keep it in alphabetical order
         //The list of transactions will be sorted so when we iterate through transactions
         //We want to keep the order of which element we put in
@@ -146,12 +156,12 @@ public class SoftwareSpendReporter {
     }
 
     /**
-     * Method: printReport
+     * Method: print
      *
      * Take in the report and print it in a two-level tree format
-     * @param report - report of the software expenses
+     * @param report report of the software expenses
      */
-    private static void printReport(LinkedHashMap<String, TreeMap<String, Integer>> report) {
+    public void print(LinkedHashMap<String, TreeMap<String, Integer>> report) {
         //Get the locale to display proper dollar format
         Locale usa = new Locale("en", "US");
         //Number format for printing out proper dollar amount
@@ -171,10 +181,10 @@ public class SoftwareSpendReporter {
      * Method: getTotal
      *
      * Get the total amount spend from buy product of a certain vendor
-     * @param products - products from certain vendor
+     * @param products products from certain vendor
      * @return total cost of all these products
      */
-    private static int getTotal(TreeMap<String, Integer> products) {
+    public int getTotal(TreeMap<String, Integer> products) {
         //Use atomic integer so it can be used in a lambda expression
         AtomicInteger total = new AtomicInteger();
         //Calculate total amount

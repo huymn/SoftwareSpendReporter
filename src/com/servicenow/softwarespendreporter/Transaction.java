@@ -20,9 +20,9 @@ public class Transaction {
      * Constructor
      * Initial all instance variables
      * @param transactionDate - when the purchase was made
-     * @param vendor - the vendor that was paid in this transaction
-     * @param product - software product that was purchase
-     * @param amount - amount, in US dollars, that was spent in this transaction
+     * @param vendor the vendor that was paid in this transaction
+     * @param product software product that was purchase
+     * @param amount amount, in US dollars, that was spent in this transaction
      */
     public Transaction(String transactionDate, String vendor, String product, int amount) {
         this.transactionDate = transactionDate;
