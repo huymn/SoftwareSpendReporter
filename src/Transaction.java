@@ -1,8 +1,8 @@
 public class Transaction {
-    private String transactionDate;
-    private String vendor;
-    private String product;
-    private int amount;
+    protected String transactionDate;
+    protected String vendor;
+    protected String product;
+    protected int amount;
 
     public Transaction(String td, String v, String p, int a) {
         this.transactionDate = td;
