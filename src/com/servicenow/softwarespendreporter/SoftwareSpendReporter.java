@@ -3,21 +3,14 @@ package com.servicenow.softwarespendreporter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.TreeMap;
+import java.text.NumberFormat;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SoftwareSpendReporter {
     public static void main(String[] args) {
-        //Check for valid arguments
-        if(args.length != 2) {
-            System.out.println("Incorrect number of arguments");
-            System.out.println("Example of correct command: java main /test.csv");
-            return;
-        }
         //Get path of CSV file, assuming that this file is valid
-        String filePath = args[1];
+        String filePath = args[0];
         //Get the transactions by sorted the vendor's name
         ArrayList<Transaction> transactions = getTransactions(filePath);
         //Hashtable for spending report
@@ -99,10 +92,13 @@ public class SoftwareSpendReporter {
     }
 
     private static void printReport(LinkedHashMap<String, TreeMap<String, Integer>> report) {
+        Locale usa = new Locale("en", "US");
+        NumberFormat dollarFormat = NumberFormat.getCurrencyInstance(usa);
+        dollarFormat.setMaximumFractionDigits(0);
         report.forEach((vendor, products) -> {
             int total = getTotal(products);
-            System.out.println(vendor + " " + total);
-            products.forEach((prod, amt) -> System.out.println("  " + prod + " " + amt));
+            System.out.println(vendor + " " + dollarFormat.format(total));
+            products.forEach((prod, amt) -> System.out.println("  " + prod + " " + dollarFormat.format(amt)));
         });
     }
 
