@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 class SoftwareSpendReporter {
     public static void main(String[] args) {
@@ -91,7 +92,23 @@ class SoftwareSpendReporter {
         return report;
     }
 
-    private static void printReport(LinkedHashMap<String, TreeMap<String, Integer>> r) {
-        System.out.println("Nothing just yet");
+    private static void printReport(LinkedHashMap<String, TreeMap<String, Integer>> report) {
+        report.forEach((vendor, products) -> {
+            int total = getTotal(products);
+            System.out.println(vendor + " " + total);
+            products.forEach((prod, amt) -> {
+                System.out.println("  " + prod + " " + amt);
+            });
+        });
+    }
+
+    private static int getTotal(TreeMap<String, Integer> products) {
+
+        AtomicInteger total = new AtomicInteger();
+
+        products.forEach((prod, amt) -> {
+            total.addAndGet(amt);
+        });
+        return total.get();
     }
 }
